@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Idea index{% endblock %}
+
+{% block body %}
+    <div {{ react_component('IndexController') }}>
+        <h1>Idea index</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Created_at</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for idea in ideas.results %}
+                <tr>
+                    <td>{{ idea.id }}</td>
+                    <td>{{ idea.title }}</td>
+                    <td>{{ idea.createdAt ? idea.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('app_idea_show', {'id': idea.id}) }}">show</a>
+                        <a href="{{ path('app_idea_edit', {'id': idea.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('app_idea_new') }}">Create new</a>
+    </div>
+{% endblock %}
